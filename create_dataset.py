@@ -5,11 +5,23 @@ import pickle
 import numpy as np
 from tqdm import tqdm_notebook
 from collections import defaultdict
-from mmsdk import mmdatasdk as md
+
+try:
+    from mmsdk import mmdatasdk as md
+except:
+    print("please install mmsdk first(https://github.com/A2Zadeh/CMU-MultimodalSDK)")
 from subprocess import check_call
 import torch
 
-
+"""
+The method of data process is used in MISA, thanks to:
+@article{hazarika2020misa,
+  title={MISA: Modality-Invariant and-Specific Representations for Multimodal Sentiment Analysis},
+  author={Hazarika, Devamanyu and Zimmermann, Roger and Poria, Soujanya},
+  journal={arXiv preprint arXiv:2005.03545},
+  year={2020}
+}
+"""
 def to_pickle(obj, path):
     with open(path, 'wb') as f:
         pickle.dump(obj, f)
@@ -31,6 +43,7 @@ def return_unk():
     return UNK
 
 
+#  transfer word into glove embedding
 def load_emb(w2i, path_to_embedding, embedding_size=300, embedding_vocab=2196017, init_emb=None):
     if init_emb is None:
         emb_mat = np.random.randn(len(w2i), embedding_size)
@@ -52,9 +65,8 @@ def load_emb(w2i, path_to_embedding, embedding_size=300, embedding_vocab=2196017
 
 class MOSI:
     def __init__(self, config):
-
         if config.sdk_dir is None:
-            print("SDK path is not specified! Please specify first in constants/paths.py")
+            print("SDK path is not specified! Please specify first in config.py")
             exit(0)
         else:
             sys.path.append(str(config.sdk_dir))
@@ -104,7 +116,6 @@ class MOSI:
             ]
 
             recipe = {feat: os.path.join(DATA_PATH, feat) + '.csd' for feat in features}
-            print(recipe)
             dataset = md.mmdataset(recipe)
 
             # we define a simple averaging function that does not depend on intervals
@@ -229,7 +240,7 @@ class MOSEI:
     def __init__(self, config):
 
         if config.sdk_dir is None:
-            print("SDK path is not specified! Please specify first in constants/paths.py")
+            print("SDK path is not specified! Please specify first in config.py")
             exit(0)
         else:
             sys.path.append(str(config.sdk_dir))
@@ -243,9 +254,7 @@ class MOSEI:
             self.dev = load_pickle(DATA_PATH + '/dev.pkl')
             self.test = load_pickle(DATA_PATH + '/test.pkl')
             self.pretrained_emb, self.word2id = torch.load(CACHE_PATH)
-
         except:
-
             # create folders for storing the data
             if not os.path.exists(DATA_PATH):
                 check_call(' '.join(['mkdir', '-p', DATA_PATH]), shell=True)
@@ -403,4 +412,3 @@ class MOSEI:
         else:
             print("Mode is not set properly (train/dev/test)")
             exit()
-

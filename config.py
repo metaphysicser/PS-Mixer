@@ -1,4 +1,3 @@
-
 import argparse
 from datetime import datetime
 from pathlib import Path
@@ -10,7 +9,7 @@ import torch.nn as nn
 word_emb_path = ''
 assert(word_emb_path is not None)
 
-project_dir = Path(__file__).resolve().parent.parent
+project_dir = Path(__file__).resolve().parent
 sdk_dir = project_dir.joinpath('CMU-MultimodalSDK')
 data_dir = project_dir.joinpath('datasets')
 data_dict = {'mosi': data_dir.joinpath('MOSI'), 'mosei': data_dir.joinpath(
@@ -69,11 +68,9 @@ def get_config(parse=True, **optional_kwargs):
     # Mode
     parser.add_argument('--mode', type=str, default='train')
 
-    # parser.add_argument('--use_bert', type=str2bool, default=True)
-
     # Train
     time_now = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
-    parser.add_argument('--name', type=str, default=f"{time_now}")
+    parser.add_argument('--name', type=str, default=f"{time_now}")  # saved-model's name
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--n_epoch', type=int, default=100)
     parser.add_argument('--patience', type=int, default=6)
@@ -82,16 +79,17 @@ def get_config(parse=True, **optional_kwargs):
     parser.add_argument('--learning_rate', type=float, default=1e-4)
     parser.add_argument('--optimizer', type=str, default='Adam')
 
-    parser.add_argument('--rnncell', type=str, default='lstm')
-    parser.add_argument('--embedding_size', type=int, default=300)
-    parser.add_argument('--hidden_size', type=int, default=128)
-    parser.add_argument('--mlp_hidden_size', type=int, default=64)
+    parser.add_argument('--rnncell', type=str, default='lstm')  # lstm or GRU
+    parser.add_argument('--embedding_size', type=int, default=300)  # embedding size in bert
+    parser.add_argument('--hidden_size', type=int, default=128)  # modality embedding size
+    parser.add_argument('--mlp_hidden_size', type=int, default=64)  # mlp-communicator hidden size
     parser.add_argument('--dropout', type=float, default=0.5)
-    parser.add_argument('--depth', type=int, default=1)
+    parser.add_argument('--depth', type=int, default=1)  # mlp-communicator depth number
 
     # Selectin activation from 'elu', "hardshrink", "hardtanh", "leakyrelu", "prelu", "relu", "rrelu", "tanh"
     parser.add_argument('--activation', type=str, default='relu')
 
+    # three loss weights
     parser.add_argument('--cls_weight', type=float, default=1)
     parser.add_argument('--polar_weight', type=float, default=0.1)
     parser.add_argument('--scale_weight', type=float, default=0.1)
@@ -102,7 +100,7 @@ def get_config(parse=True, **optional_kwargs):
     parser.add_argument('--test_duration', type=int, default=1)
 
     # Data
-    parser.add_argument('--data', type=str, default='mosi')
+    parser.add_argument('--data', type=str, default='mosi')  # mosi or mosei
 
     # Parse arguments
     if parse:

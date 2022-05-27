@@ -16,7 +16,7 @@ We begin our work on the basis of [MISA](https://github.com/declare-lab/MISA) in
 - Python 3.8
 - Pytorch 1.11.0
 
-you could run the code to build the environment.
+you could run the following command to build the environment.
 
 ```shell
 pip install requirements.txt

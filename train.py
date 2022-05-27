@@ -6,11 +6,9 @@ from solver import Solver
 import torch
 import warnings
 
-
 warnings.filterwarnings("ignore")  # ignore the warning
 
 if __name__ == '__main__':
-    
     # Setting random seed
     random_name = str(random())
     random_seed = 5546
@@ -31,7 +29,6 @@ if __name__ == '__main__':
     train_data_loader = get_loader(train_config, shuffle = True)
     dev_data_loader = get_loader(dev_config, shuffle = False)
     test_data_loader = get_loader(test_config, shuffle = False)
-
 
     # Solver is a wrapper for model traiing and testing
     # solver = Solver

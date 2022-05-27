@@ -7,11 +7,9 @@ from create_dataset import MOSI, MOSEI, PAD
 
 bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
-
 class MSADataset(Dataset):
     def __init__(self, config):
-
-        ## Fetch dataset
+        # Fetch dataset
         if "mosi" in str(config.data_dir).lower():
             dataset = MOSI(config)
         elif "mosei" in str(config.data_dir).lower():
@@ -22,7 +20,6 @@ class MSADataset(Dataset):
 
         self.data, self.word2id, self.pretrained_emb = dataset.get_data(config.mode)
         self.len = len(self.data)
-
         self.label = np.abs(np.array(self.data)[:, 1])
 
         config.visual_size = self.data[0][0][1].shape[1]
@@ -40,9 +37,7 @@ class MSADataset(Dataset):
 
 def get_loader(config, shuffle=True):
     """Load DataLoader of given DialogDataset"""
-
     dataset = MSADataset(config)
-
     print(config.mode)
     config.data_len = len(dataset)
 
@@ -51,9 +46,7 @@ def get_loader(config, shuffle=True):
         Collate functions assume batch = [Dataset[i] for i in index_set]
         '''
         # for later use we sort the batch in descending order of length
-
         batch = sorted(batch, key=lambda x: x[0][0].shape[0], reverse=True)
-
         # get the data out of the batch - use pad sequence util functions from PyTorch to pad things
 
         labels = torch.cat([torch.from_numpy(sample[1]) for sample in batch], dim=0)

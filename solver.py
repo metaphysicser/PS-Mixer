@@ -11,11 +11,9 @@ from utils import to_gpu
 torch.manual_seed(123)
 torch.cuda.manual_seed_all(123)
 
-
 class Solver(object):
     def __init__(self, train_config, train_data_loader, dev_data_loader, test_data_loader,
                  is_train=True, model=None):
-
         self.scale_criterion = corr_loss()
         self.polar_criterion = cos_loss()
         self.criterion = nn.MSELoss(reduction="mean")
@@ -28,7 +26,7 @@ class Solver(object):
 
     def build(self, cuda=True):
         if self.model is None:
-            self.model = getattr(new_models, self.train_config.model)(self.train_config)
+            self.model = getattr(new_models, self.train_config.model)(self.train_config)  # init the model
 
         # Final list
         for name, param in self.model.named_parameters():
@@ -41,11 +39,9 @@ class Solver(object):
             elif self.train_config.data == "ur_funny":
                 if "bert" in name:
                     param.requires_grad = False
-
             if 'weight_hh' in name:
                 nn.init.orthogonal_(param)
             # print('\t' + name, param.requires_grad)
-
         if torch.cuda.is_available() and cuda:
             self.model.cuda()
 
@@ -55,10 +51,15 @@ class Solver(object):
                 lr=self.train_config.learning_rate)
 
     def model_input2output(self, batch):
+        """
+        get output from model input
+        :param batch: batch
+        :return: y_tilde: model predict output
+                 y: true label
+        """
         self.model.zero_grad()
 
         v, a, y, l, bert_sent, bert_sent_type, bert_sent_mask = batch
-
 
         v = to_gpu(v)
         a = to_gpu(a)
@@ -73,6 +74,9 @@ class Solver(object):
         return y_tilde, y
 
     def loss_function(self, y_tilde, y):
+        """
+        total_loss = w1 * cls_loss + w_2 * polar_loss + w_3 * scale_loss
+        """
         polar_loss = self.polar_criterion(self.model.polar_vector, y, y_tilde)
         scale_loss = self.scale_criterion(self.model.scale, y)
         cls_loss = self.criterion(y_tilde, y)
@@ -89,16 +93,14 @@ class Solver(object):
         lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(self.optimizer, gamma=0.5)
 
         train_losses = []
-
         for e in range(self.train_config.n_epoch):
             self.model.train()
             train_loss = []
             for batch in self.train_data_loader:
                 y_tilde, y = self.model_input2output(batch)
-
                 loss = self.loss_function(y_tilde, y)
-                loss.backward()
 
+                loss.backward()
                 self.optimizer.step()
                 train_loss.append(loss.item())
             train_losses.append(train_loss)
@@ -136,18 +138,7 @@ class Solver(object):
             if num_trials <= 0:
                 print("Running out of patience, early stopping.")
                 break
-
         self.eval(mode="test", to_print=True)
-        # print(f"best test accracy: {best_test_acc}")
-        #
-        # # data = {"train_loss": self.train_loss, "train_task": self.task_loss, "train_polar":self.polar_loss, "train_scale":self.scale_loss,
-        # #         "val_loss": self.val_loss, "val_task": self.task_loss_val, "val_polar":self.polar_loss_val, "val_scale":self.scale_loss_val}
-        # #
-        # data = {"polar":np.concatenate(self.polar_vector, axis=0).squeeze(),"scale":np.concatenate(self.scale_vector, axis=0).squeeze(),"label":np.concatenate(self.label, axis=0).squeeze(),"label_pred":np.concatenate(self.label_pred, axis=0).squeeze()}
-        # # def to_pickle(obj, path):
-        # #     with open(path, 'wb') as f:
-        # #         pickle.dump(obj, f)
-        # # to_pickle(data,"cluster_7.pkl")
 
     def eval(self, mode=None, to_print=False):
         assert (mode is not None)
@@ -160,16 +151,13 @@ class Solver(object):
             dataloader = self.dev_data_loader
         elif mode == "test":
             dataloader = self.test_data_loader
-
             if to_print:
                 self.model.load_state_dict(torch.load(
                     f'checkpoints/model_{self.train_config.name}.std'))
 
         with torch.no_grad():
-
             for batch in dataloader:
                 y_tilde, y = self.model_input2output(batch)
-
                 loss = self.loss_function(y_tilde, y)
 
                 eval_loss.append(loss.item())
@@ -193,8 +181,6 @@ class Solver(object):
         :param truths: Float/int array representing the groundtruth classes, dimension (N,)
         :return: Classification accuracy
         """
-        # print(Counter(np.round(preds)))
-        # print(Counter(np.round(truths)))
         return np.sum(np.round(preds) == np.round(truths)) / float(len(truths))
 
     def calc_metrics(self, y_true, y_pred, mode=None, to_print=False):
@@ -229,7 +215,6 @@ class Solver(object):
             print("mae: ", mae)
             print("corr: ", corr)
             print("mult_acc5: ", mult_a5)
-
             print("Classification Report (pos/neg) :")
             print(classification_report(binary_truth, binary_preds, digits=5))
             print("Accuracy (pos/neg) ", accuracy_score(binary_truth, binary_preds))
@@ -248,5 +233,4 @@ class Solver(object):
             print("F1:", f_score2)
 
         print("Accuracy (non-neg/neg) ", accuracy_score(binary_truth, binary_preds))
-
         return accuracy_score(binary_truth, binary_preds)

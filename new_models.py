@@ -4,7 +4,6 @@ from torch.nn.utils.rnn import  pack_padded_sequence, pad_packed_sequence
 from transformers import BertModel, BertConfig
 from einops.layers.torch import Rearrange
 
-
 # let's define a simple model that can deal with multimodal variable length sequence
 class MISA(nn.Module):
     def __init__(self, config):
@@ -13,7 +12,6 @@ class MISA(nn.Module):
         self.text_size = config.embedding_size
         self.visual_size = config.visual_size
         self.acoustic_size = config.acoustic_size
-
         self.input_sizes = input_sizes = [self.text_size, self.visual_size, self.acoustic_size]
         self.hidden_sizes = hidden_sizes = [int(self.text_size), int(self.visual_size), int(self.acoustic_size)]
         self.output_size = output_size = config.num_classes
@@ -65,8 +63,8 @@ class MISA(nn.Module):
         self.shared1.add_module('shared_activation_1', nn.Sigmoid())
 
         self.shared2 = nn.Sequential()
-        self.shared2.add_module('shared_1', nn.Linear(in_features=config.hidden_size, out_features=config.hidden_size))
-        self.shared2.add_module('shared_activation_1', nn.Sigmoid())
+        self.shared2.add_module('shared_2', nn.Linear(in_features=config.hidden_size, out_features=config.hidden_size))
+        self.shared2.add_module('shared_activation_2', nn.Sigmoid())
 
         self.fusion = nn.Sequential()
         self.fusion.add_module('fusion_layer_1', nn.Linear(in_features=self.config.hidden_size * 2,
