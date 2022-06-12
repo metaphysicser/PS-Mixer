@@ -1,6 +1,6 @@
 # PS-Mixer
 
-![image-20220613001706944](https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220613001706944.png)
+![image-20220613005537561](https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220613005537561.png)
 
 ## Requirements
 
