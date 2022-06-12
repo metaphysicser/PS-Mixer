@@ -9,7 +9,7 @@ import torch.nn as nn
 word_emb_path = ''
 assert(word_emb_path is not None)
 
-project_dir = Path(__file__).resolve().parent
+project_dir = Path(__file__).resolve().parent.parent
 sdk_dir = project_dir.joinpath('CMU-MultimodalSDK')
 data_dir = project_dir.joinpath('datasets')
 data_dict = {'mosi': data_dir.joinpath('MOSI'), 'mosei': data_dir.joinpath(
@@ -100,7 +100,7 @@ def get_config(parse=True, **optional_kwargs):
     parser.add_argument('--test_duration', type=int, default=1)
 
     # Data
-    parser.add_argument('--data', type=str, default='mosi')  # mosi or mosei
+    parser.add_argument('--data', type=str, default='mosei')  # mosi or mosei
 
     # Parse arguments
     if parse:
@@ -116,7 +116,7 @@ def get_config(parse=True, **optional_kwargs):
     elif kwargs.data == "mosei":
         kwargs.num_classes = 1
         kwargs.batch_size = 64
-        kwargs.depth = 2
+        kwargs.depth = 1
     else:
         print("No dataset mentioned")
         exit()

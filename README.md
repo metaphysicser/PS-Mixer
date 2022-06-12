@@ -1,15 +1,6 @@
-# MLP-Communicator
+# PS-Mixer
 
-We begin our work on the basis of [MISA](https://github.com/declare-lab/MISA) initially, so the whole code architecture is similar to it, including the data process, data loader and evaluation metrics. Thanks to their open source spirit for saving us a lot of time.
-
-```
-@article{hazarika2020misa,
-  title={MISA: Modality-Invariant and-Specific Representations for Multimodal Sentiment Analysis},
-  author={Hazarika, Devamanyu and Zimmermann, Roger and Poria, Soujanya},
-  journal={arXiv preprint arXiv:2005.03545},
-  year={2020}
-}
-```
+![image-20220613001706944](https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220613001706944.png)
 
 ## Requirements
 
@@ -36,6 +27,19 @@ pip install requirements.txt
 
 The repository is updating...
 
-### Contact
+## Acknowledgements
+
+We begin our work on the basis of [MISA](https://github.com/declare-lab/MISA) initially, so the whole code architecture is similar to it, including the data process, data loader and evaluation metrics. Thanks to their open source spirit for saving us a lot of time.
+
+```
+@article{hazarika2020misa,
+  title={MISA: Modality-Invariant and-Specific Representations for Multimodal Sentiment Analysis},
+  author={Hazarika, Devamanyu and Zimmermann, Roger and Poria, Soujanya},
+  journal={arXiv preprint arXiv:2005.03545},
+  year={2020}
+}
+```
+
+## Contact
 
 For any questions, please email at [zpl010720@gmail.com](zpl010720@gmail.com)

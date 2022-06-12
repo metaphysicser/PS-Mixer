@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")  # ignore the warning
 if __name__ == '__main__':
     # Setting random seed
     random_name = str(random())
-    random_seed = 5546
+    random_seed = 55654
     torch.manual_seed(random_seed)
     torch.cuda.manual_seed_all(random_seed)
     torch.backends.cudnn.deterministic = True
