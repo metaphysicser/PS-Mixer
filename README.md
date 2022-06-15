@@ -1,6 +1,8 @@
 # PS-Mixer
 
-![image-20220613005537561](https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220613005537561.png)
+![image-20220613102731468](https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220613102731468.png)
+
+We propose a Polar-Vector and Strength-Vector mixer model called PS-Mixer, which is based on MLP-Mixer, to achieve better communication between different modal data for multimodal sentiment analysis.
 
 ## Requirements
 
@@ -25,7 +27,13 @@ pip install requirements.txt
 2. Set ```sdk_dir``` to the path of CMU-MultimodalSDK.
 3. ```python train.py --data mosi```. Replace ```mosi``` with ```mosei```  for other datasets.
 
-The repository is updating...
+
+
+## Result
+
+![image-20220615124635075](https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220615124635075.png)
+
+![image-20220615124651014](https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220615124651014.png)
 
 ## Acknowledgements
 
@@ -40,6 +48,11 @@ We begin our work on the basis of [MISA](https://github.com/declare-lab/MISA) in
 }
 ```
 
+
+
+The repository is updating...
+
 ## Contact
 
 For any questions, please email at [zpl010720@gmail.com](zpl010720@gmail.com)
+

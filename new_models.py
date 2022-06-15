@@ -5,9 +5,9 @@ from transformers import BertModel, BertConfig
 from einops.layers.torch import Rearrange
 
 # let's define a simple model that can deal with multimodal variable length sequence
-class MISA(nn.Module):
+class PS_Mixer(nn.Module):
     def __init__(self, config):
-        super(MISA, self).__init__()
+        super(PS_Mixer, self).__init__()
         self.config = config
         self.text_size = config.embedding_size
         self.visual_size = config.visual_size
