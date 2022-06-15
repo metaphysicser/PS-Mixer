@@ -31,9 +31,9 @@ pip install requirements.txt
 
 ## Result
 
-![image-20220615124635075](https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220615124635075.png)
+<img src="https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220615124635075.png" alt="image-20220615124635075" style="zoom:67%;" />
 
-![image-20220615124651014](https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220615124651014.png)
+<img src="https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220615124651014.png" alt="image-20220615124651014" style="zoom:67%;" />
 
 ## Acknowledgements
 
