@@ -1,5 +1,7 @@
 # PS-Mixer
 
+[PS-Mixer: A Polar-Vector and Strength-Vector Mixer Model for Multimodal Sentiment Analysis](https://doi.org/10.1016/j.ipm.2022.103229)
+
 ![image-20220613102731468](https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220613102731468.png)
 
 We propose a Polar-Vector and Strength-Vector mixer model called PS-Mixer, which is based on MLP-Mixer, to achieve better communication between different modal data for multimodal sentiment analysis.
@@ -35,22 +37,11 @@ pip install requirements.txt
 
 <img src="https://jhfaoisehoiew.oss-cn-beijing.aliyuncs.com/img/image-20220615124651014.png" alt="image-20220615124651014" style="zoom: 50%;" />
 
+
+
 ## Acknowledgements
 
 We begin our work on the basis of [MISA](https://github.com/declare-lab/MISA) initially, so the whole code architecture is similar to it, including the data process, data loader and evaluation metrics. Thanks to their open source spirit for saving us a lot of time.
-
-```
-@article{hazarika2020misa,
-  title={MISA: Modality-Invariant and-Specific Representations for Multimodal Sentiment Analysis},
-  author={Hazarika, Devamanyu and Zimmermann, Roger and Poria, Soujanya},
-  journal={arXiv preprint arXiv:2005.03545},
-  year={2020}
-}
-```
-
-
-
-The repository is updating...
 
 ## Contact
 
