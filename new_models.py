@@ -74,6 +74,10 @@ class PS_Mixer(nn.Module):
         self.fusion.add_module('fusion_layer_3',
                                nn.Linear(in_features=6 * self.config.hidden_size, out_features=output_size, bias = False))
 
+        self.tlayer_norm = nn.LayerNorm((hidden_sizes[0] * 2,))
+        self.vlayer_norm = nn.LayerNorm((hidden_sizes[1] * 2,))
+        self.alayer_norm = nn.LayerNorm((hidden_sizes[2] * 2,))
+
         self.MLP_Communicator1 = MLP_Communicator(self.config.hidden_size, 2, hidden_size=64, depth=1)
         self.MLP_Communicator2 = MLP_Communicator(self.config.hidden_size, 2, hidden_size=64, depth=1)
 
