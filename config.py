@@ -95,7 +95,7 @@ def get_config(parse=True, **optional_kwargs):
     parser.add_argument('--scale_weight', type=float, default=0.1)
 
     parser.add_argument('--model', type=str,
-                        default='PS-Mixer', help='one of {PS-Mixer, }')
+                        default='PS_Mixer', help='one of {PS_Mixer, }')
 
     parser.add_argument('--test_duration', type=int, default=1)
 
